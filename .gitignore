@@ -1,0 +1,12 @@
+
+.DS_Store
+
+bin/com/github/Holyvirus/regionrent/RegionRent.class
+
+bin/com/github/Holyvirus/regionrent/RMoneyTaker.class
+
+bin/com/github/Holyvirus/regionrent/RPluginListener.class
+
+bin/com/github/Holyvirus/regionrent/RWGhelper.class
+
+bin/plugin.yml
