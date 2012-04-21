@@ -40,10 +40,10 @@ public class RPluginListener implements Listener{
 	    }
 	    if  ((paramPluginEnableEvent.getPlugin().getDescription().getName().equals("WorldGuard")) && (this.plugin.getWorldGuardState()))
 	    {
-	      localObject = (BOSEconomy)paramPluginEnableEvent.getPlugin();
+	      localObject = (WorldGuardPlugin)paramPluginEnableEvent.getPlugin();
 	      if ((localObject != null) && (((Plugin)localObject).isEnabled()))
 	      {
-	        this.plugin.setBose((BOSEconomy)localObject);
+	        this.plugin.setWorldGuard((WorldGuardPlugin)localObject);
 	        this.plugin.getLogger().log(Level.INFO, "attached to WorldGuard.");
 	      }
 	    }
@@ -57,7 +57,7 @@ public class RPluginListener implements Listener{
 	      this.plugin.getLogger().log(Level.INFO, "lost connection to BOSEconomy.");
 	    }
 	    if (paramPluginDisableEvent.getPlugin().getDescription().getName().equals("WorldGuard") && (this.plugin.getWorldGuardState())) {
-	    	this.plugin.setBose(null);
+	    	this.plugin.setWorldGuard(null);
 		      this.plugin.getLogger().log(Level.INFO, "lost connection to WorldGuard.");
 	    }
 	  }

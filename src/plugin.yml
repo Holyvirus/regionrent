@@ -1,7 +1,7 @@
 name: RegionRent
 main: com.github.Holyvirus.regionrent.RegionRent
 version: 1.0
-depend: [WorldGuard, BOSEconomy]
+loadbefore: [WorldGuard, BOSEconomy]
 permissions:
     rent.collect:
         description: Allow user to collect rent!
@@ -9,6 +9,6 @@ permissions:
 commands:
    rent:
       description: collect your region's rent!
-      usage: /rent [collect]
+      usage: /<command> [args]
       permission: rent.collect
       permission-message: You don't have don't have permission to use this command!

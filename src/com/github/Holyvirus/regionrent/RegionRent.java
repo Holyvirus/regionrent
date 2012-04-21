@@ -80,26 +80,28 @@ public class RegionRent extends JavaPlugin{
 	    }
 	    log.log(Level.INFO, "[RegionRent] Enabled.");
 	  }
-	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args)
-	  {
+	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
 	    if (cmd.getName().equalsIgnoreCase("rent") && args[0].equalsIgnoreCase("collect")) {
-	      if (!sender.hasPermission("regionrent.collect")) {
-	    	  
-	    	  sender.sendMessage(ChatColor.RED + "You do not have permission to collect rent!");
-	      }else if(cmd.getName().equalsIgnoreCase("rent") && !args[0].equalsIgnoreCase("collect")){
-	    	  sender.sendMessage("The correct command to collect region rent is ''/rent collect''!");
-	    	  }
-	      }else{
-	    	  RWGobject.obtainRegionOwners();
-	    	  if (RWGobject.obtainRegionOwners().size() < 1) {
-	    		  log.log(Level.SEVERE, "[RegionRent] No regions detected!");
-	    	  }else{
-	    		  RMTobject.takeMoney();
-		    	  log.log(Level.INFO, "[RegionRent] Rent has been collected by: " + sender +"!");
-		    	  sender.sendMessage("You have successfully collected the rent!");
-	    		  }
-	    	  }
-		return false;
+	    	if(args.length > 1) {
+	    		sender.sendMessage("You need to type /rent collect!");
+	  	      if (!sender.hasPermission("regionrent.collect")) {
+		    	  sender.sendMessage(ChatColor.RED + "You do not have permission to collect rent!");
+		      }else if(cmd.getName().equalsIgnoreCase("rent") && (!(args[0].equalsIgnoreCase("collect")))){
+		    	  sender.sendMessage("The correct command to collect region rent is ''/rent collect''!");
+		      }else{
+		    	  log.log(Level.SEVERE, "im here");
+		    	  RWGobject.obtainRegionOwners();
+		    	  if (RWGobject.obtainRegionOwners().size() < 1) {
+		    		  log.log(Level.SEVERE, "[RegionRent] No regions detected!");
+		    	  }else{
+		    		  RMTobject.takeMoney();
+			    	  log.log(Level.INFO, "[RegionRent] Rent has been collected by: " + sender +"!");
+			    	  sender.sendMessage("You have successfully collected the rent!");
+		    	  }
+		      }
+		    }
+		}
+		return true;
 	  }
 	public boolean getBoseconomyState() {
 		return this.bBoseconomy;

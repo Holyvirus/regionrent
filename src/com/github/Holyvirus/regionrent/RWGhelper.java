@@ -2,7 +2,6 @@ package com.github.Holyvirus.regionrent;
 
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import org.bukkit.World;
 
@@ -13,12 +12,11 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
 public class RWGhelper {
 	
-	public static final Logger log = Logger.getLogger("Minecraft");
-	private static final World world = null;
-	private WorldGuardPlugin WG = RegionRent.getPlugin().getWorldGuard();
-	RegionManager rm = WG.getRegionManager(world);
-	Map<String, ProtectedRegion> regions = rm.getRegions();
 	public ArrayList<DefaultDomain> obtainRegionOwners(){
+		World world = RegionRent.getPlugin().getServer().getWorld("world");
+		WorldGuardPlugin WG = RegionRent.getPlugin().getWorldGuard();
+		RegionManager rm = WG.getRegionManager(world);
+		Map<String, ProtectedRegion> regions = rm.getRegions();
 		ArrayList<DefaultDomain> owners = new ArrayList<DefaultDomain>();
 		for(Map.Entry<String, ProtectedRegion> entry : regions.entrySet()) { 
 			ProtectedRegion p = entry.getValue();
