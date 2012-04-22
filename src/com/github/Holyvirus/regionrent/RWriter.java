@@ -4,6 +4,8 @@ package com.github.Holyvirus.regionrent;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
@@ -25,18 +27,15 @@ public class RWriter {
 	  this.Date = Date;
 	  }
 	  
-	  private Formatter file;
-	  
-	  public void openFile() {
-		  try {
-			  file = new Formatter("/plugins/RegionRent/deceased.txt");
-		  }
-		  catch (Exception e) {
-			  log.log(Level.WARNING, "File creation error!");
-		  }
-	  }
-	  
-	  public void add2File() {
-		  file.format("%s\t\t%s\n", Date, region );
-	  }
+		public void write(String dir, String file, String... line) {
+			try{
+				BufferedWriter f = new BufferedWriter(new FileWriter(dir + File.separator + file, true));
+				for(String text : line) {
+					f.write(text);
+					f.newLine();
+				}
+				f.flush();
+				f.close();
+			}catch(IOException e) {}
+		}
 }
