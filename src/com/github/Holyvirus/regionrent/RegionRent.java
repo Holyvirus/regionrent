@@ -1,5 +1,8 @@
 package com.github.Holyvirus.regionrent;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,7 +22,6 @@ import cosine.boseconomy.BOSEconomy;
 public class RegionRent extends JavaPlugin{
 
 	YamlConfiguration config = null;
-	private static RegionRent plugin;
 	public static final Logger log = Logger.getLogger("Minecraft");
 	public static int rent = 100;
 	private BOSEconomy bose;
@@ -32,6 +34,8 @@ public class RegionRent extends JavaPlugin{
 	
 	RWGhelper RWGobject = new RWGhelper();
 	RMoneyTaker RMTobject = new RMoneyTaker();
+	RChecker RCobject = new RChecker();
+	RWriter RWobject = new RWriter(null);
 	
 	public RegionRent() {
 		setRR();
@@ -81,28 +85,33 @@ public class RegionRent extends JavaPlugin{
 	    log.log(Level.INFO, "[RegionRent] Enabled.");
 	  }
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
-	    if (cmd.getName().equalsIgnoreCase("rent") && args[0].equalsIgnoreCase("collect")) {
-	    	if(args.length > 1) {
-	    		sender.sendMessage("You need to type /rent collect!");
-	  	      if (!sender.hasPermission("regionrent.collect")) {
-		    	  sender.sendMessage(ChatColor.RED + "You do not have permission to collect rent!");
-		      }else if(cmd.getName().equalsIgnoreCase("rent") && (!(args[0].equalsIgnoreCase("collect")))){
-		    	  sender.sendMessage("The correct command to collect region rent is ''/rent collect''!");
-		      }else{
-		    	  log.log(Level.SEVERE, "im here");
-		    	  RWGobject.obtainRegionOwners();
-		    	  if (RWGobject.obtainRegionOwners().size() < 1) {
-		    		  log.log(Level.SEVERE, "[RegionRent] No regions detected!");
-		    	  }else{
-		    		  RMTobject.takeMoney();
-			    	  log.log(Level.INFO, "[RegionRent] Rent has been collected by: " + sender +"!");
-			    	  sender.sendMessage("You have successfully collected the rent!");
-		    	  }
-		      }
-		    }
+		if (cmd.getName().equalsIgnoreCase("rent")) {
+			if(args.length >= 1) {
+				 if (args[0].equalsIgnoreCase("collect")){
+					 if (sender.hasPermission("regionrent.collect")) {
+						 RWGobject.obtainRegionOwners();
+						 if(RWGobject.obtainRegionOwners().size() >= 1) {
+							 RMTobject.takeMoney();
+							 log.log(Level.INFO, "Rent has been collected by: " + sender.getName() + "!");
+							 sender.sendMessage(ChatColor.AQUA + "Rent has been successfully collected!");
+						 }else{
+							 log.log(Level.SEVERE, "[RegionRent] No regions detected!");
+							 sender.sendMessage(ChatColor.YELLOW + "Your server does not have any regions!");
+						 }
+					 }else{
+						 sender.sendMessage(ChatColor.RED + "You do not have permission to collect rent!");
+					 }
+				 }else{
+					 sender.sendMessage(ChatColor.YELLOW + "The correct command to collect region rent is ''/rent collect''!");
+				 }
+			}else{
+				 sender.sendMessage(ChatColor.LIGHT_PURPLE + "     RegionRent 1.0");
+				 sender.sendMessage(ChatColor.LIGHT_PURPLE + "     By: AlienArtificial");
+				 sender.sendMessage(ChatColor.LIGHT_PURPLE + "     Enjoy! :)");
+			}
 		}
 		return true;
-	  }
+	}
 	public boolean getBoseconomyState() {
 		return this.bBoseconomy;
 	}
@@ -125,10 +134,7 @@ public class RegionRent extends JavaPlugin{
 	  {
 	    return this.WorldGuard;
 	  }
-		public static RegionRent getRR() {
-			 return RR;
-			 }
-		public static RegionRent getPlugin() {
-			return plugin;
-		}
+	public static RegionRent getRR() {
+	    return RR;
+    }
 }

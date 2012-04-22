@@ -1,0 +1,2 @@
+#this file will list all of the unowned regions along with the date they were cleared (if set up right it should only be the regions from the market)
+#Date          region
